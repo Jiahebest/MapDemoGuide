@@ -8,7 +8,7 @@
 
 import UIKit
 import MapKit
-class ViewController: UIViewController {
+class ViewController: UIViewController , MKMapViewDelegate{
     var mapView : MKMapView?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,8 @@ class ViewController: UIViewController {
         annotation.title = "GDCP"
         annotation.subtitle = "GuangZhou"
         mapView?.addAnnotation((annotation))
+        
+        mapView?.delegate = self
         self.view.addSubview(mapView!)
         
         let fromcoor = CLLocationCoordinate2DMake(23.1825, 113.3588)
@@ -55,6 +57,15 @@ class ViewController: UIViewController {
         }
     }
 
+    func mapView(_ mapView: MKMapView, rendererFor overlay:MKOverlay) -> MKOverlayRenderer {
+        
+        let render = MKPolylineRenderer(overlay: overlay)
+        render.strokeColor = UIColor.red
+        render.lineWidth = 3
+        return render
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
